@@ -6,6 +6,10 @@ forms.forEach((form) => {
   const inputs = form.querySelectorAll('input');
 
   inputs.forEach((input) => {
+    if (!input.id) {
+      input.id = `input-${input.name || Math.random().toString(36).slice(2)}`;
+    }
+
     const label = document.createElement('label');
 
     label.classList.add('field-label');
@@ -16,7 +20,10 @@ forms.forEach((form) => {
 
     input.parentElement.insertBefore(label, input);
 
-    input.placeholder =
-      input.name.charAt(0).toUpperCase() + input.name.slice(1);
+    const base = input.name || input.id || '';
+
+    input.placeholder = base
+      ? base.charAt(0).toUpperCase() + base.slice(1)
+      : '';
   });
 });
